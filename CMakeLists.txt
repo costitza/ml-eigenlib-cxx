@@ -17,6 +17,8 @@ endif()
 
 # Main executable
 add_executable(${PROJECT_NAME} main.cpp)
+# look for external folder for headers
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/external)
 
 if(GITHUB_ACTIONS)
     message("NOTE: GITHUB_ACTIONS defined")
