@@ -13,16 +13,16 @@
 // eigen vector Xd will be used to store the weights and the bias will be stored in a separate variable
 
 
-class LRModel : public Regressor{
+class LinearRModel : public Regressor{
     Eigen :: VectorXd weights;
     double bias;
 
 public:
-    LRModel() : Regressor(), bias(0.0) {}
-    LRModel(std::string modelName, const Hyperparameters& hp, double l2 = 0.0, double b = 0.0)
+    LinearRModel() : Regressor(), bias(0.0) {}
+    LinearRModel(std::string modelName, const Hyperparameters& hp, double l2 = 0.0, double b = 0.0)
         : Regressor(modelName, hp, l2), bias(b) {}
 
-    virtual ~LRModel() = default;
+    virtual ~LinearRModel() = default;
 
     // methods
     void train(const Dataset& data) override;
