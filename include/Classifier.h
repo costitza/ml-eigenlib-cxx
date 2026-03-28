@@ -18,13 +18,6 @@ public:
     virtual ~Classifier() = default;
 
     // methods
-    int getNumClasses() const{
-        return numClasses;
-    }
-
-    double getDecisionThreshold() const{
-        return decisionThreshold;
-    }
 
     virtual void printConfusionMatrix() const = 0;
 
