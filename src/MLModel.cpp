@@ -22,3 +22,7 @@ Hyperparameters MLModel :: getHyperparameters() const{
 std :: string MLModel :: getName() const{
     return name;
 }
+
+void MLModel :: setIsTrained(const bool a){
+        this -> isTrained = a;
+    }
