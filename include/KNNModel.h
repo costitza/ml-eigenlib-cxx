@@ -15,6 +15,10 @@ public:
     KNNModel(std::string modelName, const Hyperparameters& hp, int k = 3, bool isClass = true)
         : Classifier(modelName, hp), Regressor(modelName, hp), kNeighbors(k), isClassification(isClass) {}
 
+    // copy constructor + deep copy
+    KNNModel(const KNNModel& other);
+    KNNModel& operator=(const KNNModel& other);
+
     ~KNNModel() override;
 
     // override methods
@@ -28,6 +32,5 @@ public:
     // json serialization
     json serialize() const override;
     void deserialize(const json& j) override;
-
     
 };
