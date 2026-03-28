@@ -11,9 +11,7 @@ public:
     virtual ~Regressor() = default;
 
     // methods
-    double getL2Penalty() const{
-        return l2Penalty;
-    }
+    double getL2Penalty() const;
 
     virtual double getMSE() const = 0;
 

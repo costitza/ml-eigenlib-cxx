@@ -4,6 +4,19 @@
 #include "Regressor.h"
 #include "Dataset.h"
 
+// model for KNN derived from both Classifier and Regressor
+// the predict method will return the majority class for classification and the mean of the k nearest neighbors for regression
+
+
+// the train method will simply save the training data and the value of k 
+// and whether it is a classification or regression model, since KNN is a lazy learner and does not have a training phase 
+// in the traditional sense
+
+
+// the confusion matrix will be calculated based on the predictions and the true labels of the training data for classification
+// the MSE will be calculated based on the predictions and the true labels of the training data for regression
+
+
 class KNNModel : public Classifier, public Regressor{
     int kNeighbors;
     bool isClassification;
