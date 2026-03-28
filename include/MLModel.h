@@ -10,6 +10,7 @@ using json = nlohmann :: json;
 
 
 class MLModel{
+protected:
     std :: string name;
     bool isTrained;
     Hyperparameters params;
@@ -22,7 +23,7 @@ public:
 
     // methods
     virtual void train(const Dataset& data) = 0;
-    virtual double predict(const Eigen :: VectorXd& input) = 0;
+    virtual double predict(const Eigen :: VectorXd& input) const = 0;
 
     // save / load to json
     virtual json serialize() const = 0;

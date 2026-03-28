@@ -7,6 +7,7 @@
 // (logic will be implemented in the LogicRModel class, which will be derived from Classifier)
 
 class Classifier : virtual public MLModel{
+protected:
     int numClasses;
     double decisionThreshold;
 

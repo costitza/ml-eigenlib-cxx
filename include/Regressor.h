@@ -1,5 +1,6 @@
 #pragma once 
 #include "MLModel.h"
+#include "Dataset.h"
 
 // model for regression derived from MLModel
 // the predict method will return the dot product of the input and the weights for regression
@@ -7,6 +8,7 @@
 // (logic will be implemented in the LinearRModel class, which will be derived from Regressor)
 
 class Regressor : virtual public MLModel{
+protected:
     double l2Penalty;
 
 public:
@@ -18,6 +20,6 @@ public:
     // methods
     double getL2Penalty() const;
 
-    virtual double getMSE() const = 0;
+    virtual double getMSE(const Dataset& data) const = 0;
 
 };

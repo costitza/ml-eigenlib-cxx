@@ -3,6 +3,7 @@
 #include "Regressor.h"
 #include <Eigen/Dense>
 
+
 // model for linear regression derived from Regressor
 // the predict method will return the dot product of the input and the weigths
 // the train method will use the normal equation to calculate the weights
@@ -14,6 +15,7 @@
 
 
 class LinearRModel : public Regressor{
+protected:
     Eigen :: VectorXd weights;
     double bias;
 
@@ -25,13 +27,13 @@ public:
 
     // methods
     void train(const Dataset& data) override;
-    double predict(const Eigen :: VectorXd& input) override;
+    double predict(const Eigen :: VectorXd& input) const override;
 
     // save / load to json
     json serialize() const override;
     void deserialize(const json& j) override;
 
-    double getMSE() const override;
+    double getMSE(const Dataset& data) const override;
 
     // getters / setters
     Eigen :: VectorXd getWeights() const;
