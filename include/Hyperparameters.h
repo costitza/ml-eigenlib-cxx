@@ -11,4 +11,9 @@ class Hyperparameters{
 public:
     Hyperparameters(int feat = 1, double lr = 0.001, int eps = 10) 
         : inputFeatures(feat), learningRate(lr), epochs(eps) {}
+    
+    // getters
+    int getInputFeatures() const;
+    double getLearningRate() const;
+    int getEpochs() const;
 };
