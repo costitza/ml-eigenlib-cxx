@@ -1,6 +1,11 @@
 #pragma once 
 #include "MLModel.h"
 
+// model for regression derived from MLModel
+// the predict method will return the dot product of the input and the weights for regression
+// the train method will use the normal equation to calculate the weights for regression
+// (logic will be implemented in the LinearRModel class, which will be derived from Regressor)
+
 class Regressor : virtual public MLModel{
     double l2Penalty;
 

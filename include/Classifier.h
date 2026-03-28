@@ -1,6 +1,11 @@
 #pragma once
 #include "MLModel.h"
 
+// model for classification derived from MLModel
+// the predict method will return the class with the highest probability for classification
+// the train method will use the logistic regression algorithm to calculate the weights and the bias for classification
+// (logic will be implemented in the LogicRModel class, which will be derived from Classifier)
+
 class Classifier : virtual public MLModel{
     int numClasses;
     double decisionThreshold;
