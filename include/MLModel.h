@@ -38,4 +38,7 @@ public:
         return isTrained;
     }
 
+    Hyperparameters getHyperparameters() const{
+        return params;
+    }
 };
