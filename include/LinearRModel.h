@@ -19,8 +19,7 @@ class LinearRModel : public Regressor{
 
 public:
     LinearRModel() : Regressor(), bias(0.0) {}
-    LinearRModel(std::string modelName, const Hyperparameters& hp, double l2 = 0.0, double b = 0.0)
-        : Regressor(modelName, hp, l2), bias(b) {}
+    LinearRModel(std::string modelName, const Hyperparameters& hp, double l2 = 0.0, double b = 0.0);
 
     virtual ~LinearRModel() = default;
 
@@ -35,12 +34,8 @@ public:
     double getMSE() const override;
 
     // getters / setters
-    Eigen :: VectorXd getWeights() const{
-        return weights;
-    }
+    Eigen :: VectorXd getWeights() const;
 
-    double getBias() const{
-        return bias;
-    }
+    double getBias() const;
 
 };

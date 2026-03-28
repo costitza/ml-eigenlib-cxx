@@ -12,8 +12,7 @@ class KNNModel : public Classifier, public Regressor{
 
 public:
     KNNModel() : Classifier(), Regressor(), kNeighbors(3), isClassification(true), savedData(nullptr) {}
-    KNNModel(std::string modelName, const Hyperparameters& hp, int k = 3, bool isClass = true)
-        : Classifier(modelName, hp), Regressor(modelName, hp), kNeighbors(k), isClassification(isClass) {}
+    KNNModel(std::string modelName, const Hyperparameters& hp, int k = 3, bool isClass = true);
 
     // copy constructor + deep copy
     KNNModel(const KNNModel& other);
@@ -32,5 +31,9 @@ public:
     // json serialization
     json serialize() const override;
     void deserialize(const json& j) override;
+
+    // getters / setters
+    int getKNeighbors() const;
+    bool getIsClassification() const;
     
 };

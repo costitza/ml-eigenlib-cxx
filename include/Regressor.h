@@ -6,8 +6,7 @@ class Regressor : virtual public MLModel{
 
 public:
     Regressor () : MLModel(), l2Penalty(0.0) {}
-    Regressor(std::string modelName, const Hyperparameters& hp, double l2 = 0.0)
-        : MLModel(modelName, hp), l2Penalty(l2) {}
+    Regressor(std::string modelName, const Hyperparameters& hp, double l2 = 0.0) ;
     
     virtual ~Regressor() = default;
 

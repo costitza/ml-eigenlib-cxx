@@ -7,8 +7,7 @@ class Classifier : virtual public MLModel{
 
 public: 
     Classifier () : MLModel(), numClasses(2), decisionThreshold(0.5) {}
-    Classifier(std::string modelName, const Hyperparameters& hp, int classes = 2, double threshold = 0.5)
-        : MLModel(modelName, hp), numClasses(classes), decisionThreshold(threshold) {}
+    Classifier(std::string modelName, const Hyperparameters& hp, int classes = 2, double threshold = 0.5);
     
 
     virtual ~Classifier() = default;
@@ -23,4 +22,9 @@ public:
     }
 
     virtual void printConfusionMatrix() const = 0;
+
+    // getters / setters but only if needed
+    int getNumClasses() const;
+    double getDecisionThreshold() const;
+    
 };

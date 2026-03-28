@@ -16,8 +16,7 @@ class MLModel{
 
 public:
     MLModel() {}
-    MLModel(std::string modelName, const Hyperparameters& hp)
-        : name(modelName), isTrained(false), params(hp) {}
+    MLModel(std::string modelName, const Hyperparameters& hp);
 
     virtual ~MLModel() = default;
 
@@ -34,11 +33,7 @@ public:
         return name;
     }
 
-    bool getIsTrained() const{
-        return isTrained;
-    }
+    bool getIsTrained() const;
 
-    Hyperparameters getHyperparameters() const{
-        return params;
-    }
+    Hyperparameters getHyperparameters() const;
 };
