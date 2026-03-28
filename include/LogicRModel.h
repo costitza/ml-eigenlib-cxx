@@ -9,6 +9,7 @@
 // (very similar to linear regression but with a sigmoid activation function, i.e. the output will be between 0 and 1)
 
 class LogicRModel : public Classifier{
+protected:
     Eigen :: VectorXd weights;
     double bias;
 
@@ -24,7 +25,7 @@ public:
 
     // methods
     void train(const Dataset& data) override;
-    double predict(const Eigen :: VectorXd& input) override;
+    double predict(const Eigen :: VectorXd& input) const override;
 
     // save / load to json
     json serialize() const override;
