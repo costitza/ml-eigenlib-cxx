@@ -37,9 +37,6 @@ public:
     void train(const Dataset& data) override;
     double predict(const Eigen :: VectorXd& input) const override;
 
-    // methods specific for both classifier and regressor
-    double getMSE(const Dataset& data) const override;
-
     // json serialization
     json serialize() const override;
     void deserialize(const json& j) override;
