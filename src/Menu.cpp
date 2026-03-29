@@ -35,6 +35,35 @@ void Menu::printHeader() const {
 }
 
 
+void Menu::run() {
+    int choice;
+    while (isRunning) {
+        printHeader();
+        
+        // Robust input handling
+        if (!(std::cin >> choice)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "\n[Error] Invalid input. Please enter a number.\n";
+            continue;
+        }
+
+        switch (choice) {
+            case 1: createModel(); break;
+            case 2: trainModel(); break;
+            case 3: listModels(); break;
+            case 4: 
+                std::cout << "\nExiting program. Cleaning up memory...\n";
+                isRunning = false; 
+                break;
+            default:
+                std::cout << "\n[Error] Invalid choice.\n";
+                break;
+        }
+    }
+}
+
+
 void Menu::createModel() {
     std::cout << "\n--- Create Model ---\n";
     std::cout << "1. Linear Regression\n";

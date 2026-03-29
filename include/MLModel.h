@@ -41,9 +41,7 @@ public:
     bool getIsTrained() const;
 
     Hyperparameters getHyperparameters() const;
-    void setIsTrained(const bool a){
-        this -> isTrained = a;
-    }
+    void setIsTrained(const bool a);
 
     
 

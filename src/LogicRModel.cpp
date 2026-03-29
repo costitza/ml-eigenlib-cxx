@@ -2,7 +2,7 @@
 #include "Exceptions.h"
 
 LogicRModel :: LogicRModel(std::string modelName, const Hyperparameters& hp, int classes, double threshold, double b)
-    : Classifier(modelName, hp, classes, threshold), bias(b) {
+    : MLModel(modelName, hp), Classifier(modelName, hp, classes, threshold), bias(b) {
 
     weights = Eigen :: VectorXd :: Zero(hp.getInputFeatures());
 }

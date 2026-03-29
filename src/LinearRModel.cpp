@@ -2,8 +2,8 @@
 #include <vector>
 #include "Exceptions.h"
 
-LinearRModel :: LinearRModel(std::string modelName, const Hyperparameters& hp, double l2 = 0.0, double b = 0.0)
-    : Regressor(modelName, hp, l2), bias(b) {
+LinearRModel :: LinearRModel(std::string modelName, const Hyperparameters& hp, double l2, double b)
+    : MLModel(modelName, hp), Regressor(modelName, hp, l2), bias(b) {
     weights = Eigen :: VectorXd :: Zero(hp.getInputFeatures());
 }
 

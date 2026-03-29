@@ -33,8 +33,6 @@ public:
     json serialize() const override;
     void deserialize(const json& j) override;
 
-    double getMSE(const Dataset& data) const override;
-
     // getters / setters
     Eigen :: VectorXd getWeights() const;
 
