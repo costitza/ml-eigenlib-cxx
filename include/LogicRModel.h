@@ -22,7 +22,7 @@ public:
     LogicRModel() : Classifier(), bias(0.0) {}
     LogicRModel(std::string modelName, const Hyperparameters& hp, int classes = 2, double threshold = 0.5, double b = 0.0);
 
-    virtual ~LogicRModel() = default;
+    virtual ~LogicRModel() override = default;
 
     // methods
     void train(const Dataset& data) override;

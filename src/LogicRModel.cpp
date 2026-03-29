@@ -6,6 +6,14 @@ LogicRModel :: LogicRModel(std::string modelName, const Hyperparameters& hp, int
     weights = Eigen :: VectorXd :: Zero(hp.getInputFeatures());
 }
 
+double LogicRModel :: getBias() const {
+    return bias;
+}
+
+Eigen :: VectorXd LogicRModel :: getWeights() const{
+    return weights;
+}
+
 
 // different from linear regression, this method uses gradient descent
 void LogicRModel :: train(const Dataset& data) {
@@ -64,4 +72,28 @@ double LogicRModel :: predict(const Eigen :: VectorXd& input) const{
     // sigmoid function
     double probability = LogicRModel :: sigmoid(z);
     return (probability >= this -> getDecisionThreshold()) ? 1.0 : 0.0;
+}
+
+
+json LogicRModel::serialize() const {
+    json j;
+    j["name"] = this->getName();
+    j["bias"] = bias;
+    j["decisionThreshold"] = this->getDecisionThreshold();
+
+    // convert Eigen::VectorXd to std::vector
+    std::vector<double> w_vec(weights.data(), weights.data() + weights.size());
+    j["weights"] = w_vec;
+    
+    return j;
+}
+
+void LogicRModel::deserialize(const json& j) {
+    bias = j["bias"];
+    
+    // Convert std::vector back into an Eigen::VectorXd
+    std::vector<double> w_vec = j["weights"];
+    weights = Eigen::Map<Eigen::VectorXd>(w_vec.data(), w_vec.size());
+    
+    this->setIsTrained(true);
 }
