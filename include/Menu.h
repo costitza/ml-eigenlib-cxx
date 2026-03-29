@@ -20,8 +20,8 @@ private:
     // internal ui helpers
     void printHeader() const;
     void createModel();
-    void trainModel(const MLModel*);
-    void listModels();
+    void trainModel();
+    void listModels() const;
 
 public:
     static Menu& getInstance();
