@@ -20,7 +20,7 @@ public:
 
     // methods
 
-    virtual void printConfusionMatrix() const = 0;
+    void printConfusionMatrix(const Dataset& data) const;
 
     // getters / setters but only if needed
     int getNumClasses() const;
