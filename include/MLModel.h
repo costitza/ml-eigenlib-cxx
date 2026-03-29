@@ -15,6 +15,10 @@ protected:
     bool isTrained;
     Hyperparameters params;
 
+    // static variables + id
+    static int totalModels;
+    std :: string modelID;
+
 public:
     MLModel() {}
     MLModel(std::string modelName, const Hyperparameters& hp);
@@ -30,9 +34,9 @@ public:
     virtual void deserialize(const json& j) = 0;
 
     // getters / setters
-    std :: string getName() const{
-        return name;
-    }
+    std :: string getName() const;
+
+    std :: string getModelID() const;
 
     bool getIsTrained() const;
 
@@ -40,4 +44,10 @@ public:
     void setIsTrained(const bool a){
         this -> isTrained = a;
     }
+
+    
+
+    // static methods
+    static int getTotalModels();
+    static std :: string generateRandomID();
 };

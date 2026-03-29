@@ -32,7 +32,7 @@ void LogicRModel :: train(const Dataset& data) {
 
         // unary expression from eigen => function we define to every elemnt of vector
         Eigen :: VectorXd A = Z.unaryExpr([](double z){
-            return 1.0 / (1.0 + std :: exp(-z));
+            return LogicRModel :: sigmoid(z); // used static methods defined in header
         });
 
         // error
@@ -62,6 +62,6 @@ double LogicRModel :: predict(const Eigen :: VectorXd& input) const{
     double z = input.dot(weights) + bias;
 
     // sigmoid function
-    double probability = 1.0 / (1.0 + std :: exp(-z));
+    double probability = LogicRModel :: sigmoid(z);
     return (probability >= this -> getDecisionThreshold()) ? 1.0 : 0.0;
 }

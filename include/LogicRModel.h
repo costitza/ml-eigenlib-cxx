@@ -13,7 +13,8 @@ protected:
     Eigen :: VectorXd weights;
     double bias;
 
-    double sigmoid(double z) const {
+    // static method for squashing prediction between 0 and 1
+    static double sigmoid(double z){
         return 1.0 / (1.0 + std :: exp(-z));
     }
 
