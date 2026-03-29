@@ -16,7 +16,19 @@ else()
 endif()
 
 # Main executable
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME}
+    main.cpp 
+    src/Menu.cpp
+    src/MLModel.cpp 
+    src/Classifier.cpp
+    src/Regressor.cpp
+    src/LinearRModel.cpp 
+    src/LogicRModel.cpp 
+    src/KNNModel.cpp 
+    src/Dataset.cpp 
+    src/Hyperparameters.cpp
+)
+target_include_directories(${PROJECT_NAME} PUBLIC include)
 # look for external folder for headers
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/external)
 

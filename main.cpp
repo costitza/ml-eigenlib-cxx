@@ -1,6 +1,8 @@
-#include<iostream>
+#include <iostream>
+#include "include/Menu.h"
 
 int main(){
-    std::cout<<"Hello world!";
+    Menu :: getInstance().run();
+
     return 0;
 }
