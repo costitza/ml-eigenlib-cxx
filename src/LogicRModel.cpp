@@ -1,4 +1,5 @@
 #include "LogicRModel.h"
+#include "Exceptions.h"
 
 LogicRModel :: LogicRModel(std::string modelName, const Hyperparameters& hp, int classes, double threshold, double b)
     : Classifier(modelName, hp, classes, threshold), bias(b) {
@@ -63,6 +64,10 @@ void LogicRModel :: train(const Dataset& data) {
 
 
 double LogicRModel :: predict(const Eigen :: VectorXd& input) const{
+
+    if (input.size() != weights.size()) {
+        throw DimensionMismatchException(weights.size(), input.size());
+    }
 
     // same as linear regression
     // calculate z and then squash value between 0 and 1

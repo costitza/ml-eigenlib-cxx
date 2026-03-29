@@ -1,4 +1,5 @@
 #include "KNNModel.h"
+#include "Exceptions.h"
 
 // constr
 KNNModel::KNNModel(std::string modelName, const Hyperparameters& hp, int k, bool isClass)
@@ -62,7 +63,7 @@ void KNNModel :: train(const Dataset& data) {
 
 double KNNModel::predict(const Eigen::VectorXd& input) const {
     if (!this -> getIsTrained() || savedData == nullptr) {
-        // throw std::runtime_error("KNNModel cannot predict without being trained first!");
+        throw NotTrainedException(this -> getName());
     }
 
     int n = savedData -> getRows();

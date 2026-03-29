@@ -1,4 +1,5 @@
 #include "Dataset.h"
+#include "Exceptions.h"
 
 Dataset :: Dataset(int r, int c) : rows(r), cols(c) {
     labels = new double[rows];
@@ -70,8 +71,7 @@ Dataset :: ~Dataset(){
 
 double Dataset :: getLabel(int index) const{
     if (index < 0 || index > rows){
-        // throw exception handleuit de mine
-        return 0;
+        throw DataIndexException(index, rows);
     }
 
     return labels[index];
@@ -79,7 +79,7 @@ double Dataset :: getLabel(int index) const{
 
 Eigen :: VectorXd Dataset :: getRowsAsEigen(int index) const{
     if (index < 0 || index > rows){
-        // throw exception handleuit de mine
+        throw DataIndexException(index, rows);
     }
 
     Eigen :: VectorXd vec(cols);

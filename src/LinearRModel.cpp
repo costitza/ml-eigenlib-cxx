@@ -1,5 +1,6 @@
 #include "LinearRModel.h"
 #include <vector>
+#include "Exceptions.h"
 
 LinearRModel :: LinearRModel(std::string modelName, const Hyperparameters& hp, double l2 = 0.0, double b = 0.0)
     : Regressor(modelName, hp, l2), bias(b) {
@@ -47,6 +48,10 @@ void LinearRModel :: train(const Dataset& data){
 
 
 double LinearRModel :: predict(const Eigen :: VectorXd& input) const{
+    if (input.size() != weights.size()) {
+        throw DimensionMismatchException(weights.size(), input.size());
+    }
+
     // dot product y = xw + b
     return input.dot(weights) + bias;
 }
