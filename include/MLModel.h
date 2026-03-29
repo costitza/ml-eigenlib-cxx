@@ -23,7 +23,7 @@ public:
     MLModel() {}
     MLModel(std::string modelName, const Hyperparameters& hp);
 
-    virtual ~MLModel() = default;
+    virtual ~MLModel();
 
     // methods
     virtual void train(const Dataset& data) = 0;

@@ -18,6 +18,7 @@ public:
     virtual ~Regressor() = default;
 
     // methods
+
     double getL2Penalty() const;
 
     virtual double getMSE(const Dataset& data) const = 0;

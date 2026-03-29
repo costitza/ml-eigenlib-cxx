@@ -23,7 +23,7 @@ public:
     LinearRModel() : Regressor(), bias(0.0) {}
     LinearRModel(std::string modelName, const Hyperparameters& hp, double l2 = 0.0, double b = 0.0);
 
-    virtual ~LinearRModel() = default;
+    virtual ~LinearRModel() override = default;
 
     // methods
     void train(const Dataset& data) override;

@@ -38,7 +38,10 @@ MLModel :: MLModel(std::string modelName, const Hyperparameters& hp)
         modelID = MLModel :: generateRandomID();
     }
 
-
+// destruct
+MLModel :: ~MLModel(){
+    totalModels --;
+}
 
 
 

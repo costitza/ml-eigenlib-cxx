@@ -35,11 +35,10 @@ public:
 
     // override methods
     void train(const Dataset& data) override;
-    double predict(const Eigen :: VectorXd& input) override;
+    double predict(const Eigen :: VectorXd& input) const override;
 
     // methods specific for both classifier and regressor
-    void printConfusionMatrix() const override;
-    double getMSE() const override;
+    double getMSE(const Dataset& data) const override;
 
     // json serialization
     json serialize() const override;
