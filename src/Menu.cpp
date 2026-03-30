@@ -227,7 +227,10 @@ void Menu::loadModel() {
     std::string name = j.value("name", "LoadedModel");
     
     // create default hyperparameters (they will be overwritten if theyre serialized)
-    Hyperparameters hp(5, 0.01, 100); 
+    Hyperparameters hp(5, 0.01, 100);
+    if (j.contains("hyperparameters")) {
+        hp.deserialize(j["hyperparameters"]);
+    }
 
     MLModel* newModel = nullptr;
 

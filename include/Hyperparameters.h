@@ -1,4 +1,7 @@
 #pragma once 
+#include <nlohmann/json.hpp>
+
+using json = nlohmann :: json;
 
 // simple class to hold the hyperparameters for the models, such as the number of input features,
 // the learning rate and the number of epochs for training
@@ -15,4 +18,8 @@ public:
     int getInputFeatures() const;
     double getLearningRate() const;
     int getEpochs() const;
+
+    // methods for json
+    json serialize() const;
+    void deserialize(const json& j);
 };

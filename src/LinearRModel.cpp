@@ -1,5 +1,6 @@
 #include "LinearRModel.h"
 #include <vector>
+#include <iostream>
 #include "Exceptions.h"
 
 LinearRModel :: LinearRModel(std::string modelName, const Hyperparameters& hp, double l2, double b)
@@ -59,9 +60,11 @@ double LinearRModel :: predict(const Eigen :: VectorXd& input) const{
 
 json LinearRModel :: serialize() const {
     json j;
-    j["name"] = name;
+    j["name"] = this -> getName();
     j["bias"] = bias;
     j["l2Penalty"] = l2Penalty;
+
+    j["hyperparameters"] = this->getHyperparameters().serialize();
 
     // convert to normal vector the weights
     std :: vector<double> w_vec(weights.data(), weights.data() + weights.size());
@@ -72,15 +75,19 @@ json LinearRModel :: serialize() const {
 
 
 void LinearRModel :: deserialize(const json& j){
-    name = j["name"];
-    bias = j["bias"];
-    l2Penalty = j["l2Penalty"];
+    name = j.value("name", "modelLoaded");
+    bias = j.value("bias", 0.0);
+    l2Penalty = j.value("l2Penalty", 0.0);
 
-    std :: vector<double> w_vec = j["weights"];
-
-    weights = Eigen :: Map <Eigen :: VectorXd> (w_vec.data(), w_vec.size());
-
-    isTrained = true;
+    if (j.contains("weights")) {
+        std::vector<double> w_vec = j["weights"];
+        weights = Eigen::Map<Eigen::VectorXd>(w_vec.data(), w_vec.size());
+        this->setIsTrained(true);
+    } else {
+        std::cout << "[Warning] No weights found in this JSON file!\n";
+        this->setIsTrained(false);
+    }
+    isTrained = false;
 }
 
 

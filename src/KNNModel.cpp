@@ -122,6 +122,8 @@ json KNNModel::serialize() const {
     j["name"] = this->getName();
     j["kNeighbors"] = kNeighbors;
     j["isClassification"] = isClassification;
+
+    j["hyperparameters"] = this->getHyperparameters().serialize();
     
     // serializing an entire raw dataset into JSON can create massive files
     // so this is a nono
@@ -130,8 +132,11 @@ json KNNModel::serialize() const {
 }
 
 void KNNModel::deserialize(const json& j) {
-    kNeighbors = j["kNeighbors"];
-    isClassification = j["isClassification"];
+    name = j.value("name", "modelLoaded");
+    kNeighbors = j.value("kNeighbors", 0);
+    isClassification = j.value("isClassification", false);
+
+
     // a real deserialization would require loading the dataset back in
 }
 

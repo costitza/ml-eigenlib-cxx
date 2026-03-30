@@ -1,5 +1,6 @@
 #include "LogicRModel.h"
 #include "Exceptions.h"
+#include <iostream>
 
 LogicRModel :: LogicRModel(std::string modelName, const Hyperparameters& hp, int classes, double threshold, double b)
     : MLModel(modelName, hp), Classifier(modelName, hp, classes, threshold), bias(b) {
@@ -86,6 +87,8 @@ json LogicRModel::serialize() const {
     j["bias"] = bias;
     j["decisionThreshold"] = this->getDecisionThreshold();
 
+    j["hyperparameters"] = this->getHyperparameters().serialize();
+
     // convert Eigen::VectorXd to std::vector
     std::vector<double> w_vec(weights.data(), weights.data() + weights.size());
     j["weights"] = w_vec;
@@ -94,11 +97,15 @@ json LogicRModel::serialize() const {
 }
 
 void LogicRModel::deserialize(const json& j) {
-    bias = j["bias"];
+    name = j.value("name", "modelLoaded");
+    bias = j.value("bias", 0.0);
     
-    // Convert std::vector back into an Eigen::VectorXd
-    std::vector<double> w_vec = j["weights"];
-    weights = Eigen::Map<Eigen::VectorXd>(w_vec.data(), w_vec.size());
-    
-    this->setIsTrained(true);
+    if (j.contains("weights")) {
+        std :: vector<double> w_vec = j["weights"];
+        weights = Eigen :: Map<Eigen :: VectorXd>(w_vec.data(), w_vec.size());
+        this -> setIsTrained(true);
+    } else {
+        std :: cout << "[Warning] No weights found in this JSON file!\n";
+        this -> setIsTrained(false);
+    }
 }
