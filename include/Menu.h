@@ -22,6 +22,9 @@ private:
     void createModel();
     void trainModel();
     void listModels() const;
+    void saveModel();
+    void loadModel();
+    MLModel* getModelByID(std :: string targetID);
 
 public:
     static Menu& getInstance();

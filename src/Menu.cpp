@@ -5,6 +5,7 @@
 #include "Dataset.h"
 #include "Hyperparameters.h"
 #include <iostream>
+#include <fstream>
 
 // private constr
 Menu :: Menu() : isRunning(true) {}
@@ -30,7 +31,9 @@ void Menu::printHeader() const {
     std::cout << "1. Create a New Model\n";
     std::cout << "2. Train a Model (Dummy Data)\n";
     std::cout << "3. List Active Models\n";
-    std::cout << "4. Exit\n";
+    std::cout << "4. Save a Model to File\n";
+    std::cout << "5. Load a Model from File\n";
+    std::cout << "6. Exit\n";
     std::cout << "Choose an option: ";
 }
 
@@ -40,7 +43,6 @@ void Menu::run() {
     while (isRunning) {
         printHeader();
         
-        // Robust input handling
         if (!(std::cin >> choice)) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -52,7 +54,9 @@ void Menu::run() {
             case 1: createModel(); break;
             case 2: trainModel(); break;
             case 3: listModels(); break;
-            case 4: 
+            case 4: saveModel(); break;
+            case 5: loadModel(); break; 
+            case 6: 
                 std::cout << "\nExiting program. Cleaning up memory...\n";
                 isRunning = false; 
                 break;
@@ -61,6 +65,17 @@ void Menu::run() {
                 break;
         }
     }
+}
+
+MLModel* Menu :: getModelByID(std :: string targetID){
+    MLModel* modelToSave = nullptr;
+    for (MLModel* model : models) {
+        if (model->getModelID() == targetID) {
+            modelToSave = model;
+            break;
+        }
+    }
+    return modelToSave;
 }
 
 
@@ -112,25 +127,15 @@ void Menu::trainModel() {
     std::string targetID;
     std::cin >> targetID;
 
-    MLModel* modelToTrain = nullptr;
+    MLModel* modelToTrain = getModelByID(targetID);
 
-    // Search through the vector for a matching ID
-    for (MLModel* model : models) {
-        if (model->getModelID() == targetID) {
-            modelToTrain = model;
-            break; // Found it! No need to keep searching.
-        }
-    }
-
-    // Check if we actually found a model
     if (modelToTrain != nullptr) {
-        // Generate dummy data: 100 rows, matching the 5 features in our Hyperparameters
+        // Generate dummy data: 100 rows, matching the 5 features in hyperparams
         Dataset dummyData(100, 5);
         dummyData.populateDummyData(); 
 
         std::cout << "\nTraining model " << targetID << "...\n";
         
-        // POLYMORPHISM: This calls the correct train() method!
         modelToTrain->train(dummyData); 
     } else {
         std::cout << "\n[Error] Could not find a model with ID: " << targetID << "\n";
@@ -151,3 +156,102 @@ void Menu::listModels() const {
                   << " | Trained: " << (models[i]->getIsTrained() ? "Yes" : "No") << "\n";
     }
 }
+
+
+void Menu::saveModel() {
+    if (models.empty()) {
+        std::cout << "\n[Error] No models available to save.\n";
+        return;
+    }
+
+    listModels();
+    std::cout << "\nEnter the exact ID of the model to save: ";
+    std::string targetID;
+    std::cin >> targetID;
+
+    MLModel* modelToSave = getModelByID(targetID);
+
+    if (modelToSave != nullptr) {
+        std::cout << "Enter filename to save to (e.g., model.json): ";
+        std::string filename;
+        std::cin >> filename;
+
+        // open a file stream for writing
+        std::ofstream file(filename);
+        if (file.is_open()) {
+            json j = modelToSave->serialize();
+            file << j.dump(4);
+            file.close();
+            std::cout << "[Success] Model " << targetID << " saved to " << filename << "\n";
+        } else {
+            std::cout << "[Error] Could not open file for writing.\n";
+        }
+    } else {
+        std::cout << "\n[Error] Could not find a model with ID: " << targetID << "\n";
+    }
+}
+
+
+void Menu::loadModel() {
+    std::cout << "\n--- Load Model ---\n";
+    std::cout << "Enter filename to load from (e.g., model.json): ";
+    std::string filename;
+    std::cin >> filename;
+
+    // open a file stream for reading
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cout << "[Error] Could not open file " << filename << ". Does it exist?\n";
+        return;
+    }
+
+    json j;
+    try {
+        file >> j;
+    } catch (const json::parse_error& e) {
+        std::cout << "[Error] Invalid JSON format: " << e.what() << "\n";
+        return;
+    }
+    file.close();
+
+    std::cout << "\nWhat type of model is inside this file?\n";
+    std::cout << "1. Linear Regression\n";
+    std::cout << "2. Logistic Regression\n";
+    std::cout << "3. K-Nearest Neighbors\n";
+    std::cout << "Select type: ";
+    
+    int type;
+    std::cin >> type;
+
+
+    std::string name = j.value("name", "LoadedModel");
+    
+    // create default hyperparameters (they will be overwritten if theyre serialized)
+    Hyperparameters hp(5, 0.01, 100); 
+
+    MLModel* newModel = nullptr;
+
+    if (type == 1) {
+        newModel = new LinearRModel(name, hp, 0.0);
+    } else if (type == 2) {
+        newModel = new LogicRModel(name, hp, 2, 0.5);
+    } else if (type == 3) {
+        newModel = new KNNModel(name, hp, 3, true);
+    } else {
+        std::cout << "[Error] Unknown model type.\n";
+        return;
+    }
+
+    // push model into blank
+    try {
+        newModel->deserialize(j);
+        models.push_back(newModel);
+        std::cout << "[Success] Model loaded and created with new ID: " << newModel->getModelID() << "\n";
+    } catch (const std::exception& e) {
+        std::cout << "[Error] Failed to deserialize. Did you pick the wrong model type?\n";
+        std::cout << "Details: " << e.what() << "\n";
+        // delete if error for memory leaks
+        delete newModel;
+    }
+}
+
