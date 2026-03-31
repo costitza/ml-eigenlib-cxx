@@ -58,6 +58,12 @@ double LinearRModel :: predict(const Eigen :: VectorXd& input) const{
 }
 
 
+void LinearRModel :: print(std :: ostream& os) const{
+    MLModel::print(os); // print base info
+    os << " | Type: Linear Regression | Bias: " << bias;
+}
+
+
 json LinearRModel :: serialize() const {
     json j;
     j["model_type"] = "LinearRModel";

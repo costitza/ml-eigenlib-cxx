@@ -81,6 +81,13 @@ double LogicRModel :: predict(const Eigen :: VectorXd& input) const{
 }
 
 
+void LogicRModel::print(std::ostream& os) const {
+    MLModel::print(os);
+    os << " | Type: Logistic Regression | Threshold: " << this->getDecisionThreshold() 
+       << " | Bias: " << bias;
+}
+
+
 json LogicRModel::serialize() const {
     json j;
     j["model_type"] = "LogicRModel";

@@ -3,6 +3,7 @@
 #include "Classifier.h"
 #include "Regressor.h"
 #include "Dataset.h"
+#include <iostream>
 
 // model for KNN derived from both Classifier and Regressor
 // the predict method will return the majority class for classification and the mean of the k nearest neighbors for regression
@@ -36,6 +37,8 @@ public:
     // override methods
     void train(const Dataset& data) override;
     double predict(const Eigen :: VectorXd& input) const override;
+
+    void print(std :: ostream& os) const override;
 
     // json serialization
     json serialize() const override;

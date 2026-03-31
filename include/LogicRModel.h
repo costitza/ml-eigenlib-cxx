@@ -3,6 +3,7 @@
 #include "Classifier.h"
 #include <Eigen/Dense>
 #include <cmath>
+#include <iostream>
 
 // model for logistic regression derived from Classifier
 // the predict method will return the sigmoid of the dot product of the input and the weights 
@@ -27,6 +28,8 @@ public:
     // methods
     void train(const Dataset& data) override;
     double predict(const Eigen :: VectorXd& input) const override;
+
+    void print(std :: ostream& os) const override;
 
     // save / load to json
     json serialize() const override;

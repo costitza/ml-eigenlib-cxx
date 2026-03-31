@@ -2,6 +2,7 @@
 
 #include "Regressor.h"
 #include <Eigen/Dense>
+#include <iostream>
 
 
 // model for linear regression derived from Regressor
@@ -28,6 +29,8 @@ public:
     // methods
     void train(const Dataset& data) override;
     double predict(const Eigen :: VectorXd& input) const override;
+
+    void print(std :: ostream& os) const override;
 
     // save / load to json
     json serialize() const override;

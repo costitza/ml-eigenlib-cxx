@@ -117,6 +117,14 @@ double KNNModel::predict(const Eigen::VectorXd& input) const {
     }
 }
 
+
+void KNNModel::print(std::ostream& os) const {
+    MLModel::print(os);
+    os << " | Type: K-Nearest Neighbors | K: " << kNeighbors 
+       << " | Mode: " << (isClassification ? "Classification" : "Regression");
+}
+
+
 json KNNModel::serialize() const {
     json j;
     j["model_type"] = "KNNModel";

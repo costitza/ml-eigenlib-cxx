@@ -2,6 +2,7 @@
 #include <random>
 #include <iomanip>
 #include <sstream>
+#include <iostream>
 
 // the other methods are pure virtual
 // they will be implemented in the derived classes
@@ -41,6 +42,17 @@ MLModel :: MLModel(std::string modelName, const Hyperparameters& hp)
 // destruct
 MLModel :: ~MLModel(){
     totalModels --;
+}
+
+
+void MLModel :: print(std :: ostream& os) const{
+    os << "[ID: " << modelID << "] " << name 
+       << " | Trained: " << (isTrained ? "Yes" : "No");
+}
+
+std :: ostream& operator<<(std :: ostream& os, const MLModel& model){
+    model.print(os);
+    return os;
 }
 
 

@@ -2,6 +2,7 @@
 #include <string>
 #include "Hyperparameters.h"
 #include "Dataset.h"
+#include <iostream>
 
 #include <Eigen/Dense>
 #include <nlohmann/json.hpp>
@@ -32,6 +33,9 @@ public:
     // save / load to json
     virtual json serialize() const = 0;
     virtual void deserialize(const json& j) = 0;
+
+    virtual void print(std :: ostream& os) const;
+    friend std :: ostream& operator<<(std :: ostream& os, const MLModel& model);
 
     // getters / setters
     std :: string getName() const;
