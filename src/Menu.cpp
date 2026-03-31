@@ -153,10 +153,8 @@ void Menu::listModels() const {
         return;
     }
 
-    for (size_t i = 0; i < models.size(); ++i) {
-        std::cout << "[" << i << "] ID: " << models[i]->getModelID() 
-                  << " | Name: " << models[i]->getName() 
-                  << " | Trained: " << (models[i]->getIsTrained() ? "Yes" : "No") << "\n";
+    for(size_t i = 0; i < models.size(); ++i){
+        std :: cout << i << ". " << *models[i] << '\n';
     }
 }
 
@@ -208,7 +206,7 @@ void Menu::loadModel() {
     std::string fullPath = "../data/" + filename;
 
     std::ifstream file(fullPath);
-    
+
     if (!file.is_open()) {
         std::cout << "[Error] Could not open file " << filename << ". Does it exist?\n";
         return;
