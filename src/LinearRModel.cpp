@@ -60,6 +60,7 @@ double LinearRModel :: predict(const Eigen :: VectorXd& input) const{
 
 json LinearRModel :: serialize() const {
     json j;
+    j["model_type"] = "LinearRModel";
     j["name"] = this -> getName();
     j["bias"] = bias;
     j["l2Penalty"] = l2Penalty;

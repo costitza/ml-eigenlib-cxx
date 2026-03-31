@@ -83,6 +83,7 @@ double LogicRModel :: predict(const Eigen :: VectorXd& input) const{
 
 json LogicRModel::serialize() const {
     json j;
+    j["model_type"] = "LogicRModel";
     j["name"] = this->getName();
     j["bias"] = bias;
     j["decisionThreshold"] = this->getDecisionThreshold();

@@ -119,6 +119,7 @@ double KNNModel::predict(const Eigen::VectorXd& input) const {
 
 json KNNModel::serialize() const {
     json j;
+    j["model_type"] = "KNNModel";
     j["name"] = this->getName();
     j["kNeighbors"] = kNeighbors;
     j["isClassification"] = isClassification;
@@ -132,6 +133,7 @@ json KNNModel::serialize() const {
 }
 
 void KNNModel::deserialize(const json& j) {
+    
     name = j.value("name", "modelLoaded");
     kNeighbors = j.value("kNeighbors", 0);
     isClassification = j.value("isClassification", false);

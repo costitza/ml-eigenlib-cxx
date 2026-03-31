@@ -6,6 +6,9 @@
 #include "Hyperparameters.h"
 #include <iostream>
 #include <fstream>
+#include <filesystem>
+
+namespace fs = std :: filesystem;
 
 // private constr
 Menu :: Menu() : isRunning(true) {}
@@ -176,15 +179,19 @@ void Menu::saveModel() {
         std::string filename;
         std::cin >> filename;
 
-        // open a file stream for writing
-        std::ofstream file(filename);
+        std::string dataDir = "../data/";
+        fs::create_directories(dataDir);
+        
+        std::string fullPath = dataDir + filename;
+
+        std::ofstream file(fullPath);
         if (file.is_open()) {
-            json j = modelToSave->serialize();
-            file << j.dump(4);
+            json j = modelToSave->serialize(); 
+            file << j.dump(4); 
             file.close();
-            std::cout << "[Success] Model " << targetID << " saved to " << filename << "\n";
+            std::cout << "[Success] Model " << targetID << " saved to " << fullPath << "\n";
         } else {
-            std::cout << "[Error] Could not open file for writing.\n";
+            std::cout << "[Error] Could not open file for writing at " << fullPath << "\n";
         }
     } else {
         std::cout << "\n[Error] Could not find a model with ID: " << targetID << "\n";
@@ -198,8 +205,10 @@ void Menu::loadModel() {
     std::string filename;
     std::cin >> filename;
 
-    // open a file stream for reading
-    std::ifstream file(filename);
+    std::string fullPath = "../data/" + filename;
+
+    std::ifstream file(fullPath);
+    
     if (!file.is_open()) {
         std::cout << "[Error] Could not open file " << filename << ". Does it exist?\n";
         return;
@@ -214,16 +223,7 @@ void Menu::loadModel() {
     }
     file.close();
 
-    std::cout << "\nWhat type of model is inside this file?\n";
-    std::cout << "1. Linear Regression\n";
-    std::cout << "2. Logistic Regression\n";
-    std::cout << "3. K-Nearest Neighbors\n";
-    std::cout << "Select type: ";
-    
-    int type;
-    std::cin >> type;
-
-
+    std::string modelType = j.value("model_type", "Unknown");
     std::string name = j.value("name", "LoadedModel");
     
     // create default hyperparameters (they will be overwritten if theyre serialized)
@@ -234,14 +234,14 @@ void Menu::loadModel() {
 
     MLModel* newModel = nullptr;
 
-    if (type == 1) {
+    if (modelType == "LinearRModel") {
         newModel = new LinearRModel(name, hp, 0.0);
-    } else if (type == 2) {
+    } else if (modelType == "LogicRModel") {
         newModel = new LogicRModel(name, hp, 2, 0.5);
-    } else if (type == 3) {
+    } else if (modelType == "KNNModel") {
         newModel = new KNNModel(name, hp, 3, true);
     } else {
-        std::cout << "[Error] Unknown model type.\n";
+        std::cout << "[Error] Unknown or missing model_type in JSON: " << modelType << "\n";
         return;
     }
 
