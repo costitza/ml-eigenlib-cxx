@@ -26,6 +26,8 @@ private:
     void loadModel();
     MLModel* getModelByID(std :: string targetID);
 
+    void pause() const;
+
 public:
     static Menu& getInstance();
 

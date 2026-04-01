@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <limits>
 
 namespace fs = std :: filesystem;
 
@@ -41,6 +42,14 @@ void Menu::printHeader() const {
 }
 
 
+void Menu::pause() const {
+    std::cout << "\nPress Enter to return to the menu...";
+    // throw away any leftover characters (like the '\n' from previous inputs)
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.get(); 
+}
+
+
 void Menu::run() {
     int choice;
     while (isRunning) {
@@ -66,6 +75,10 @@ void Menu::run() {
             default:
                 std::cout << "\n[Error] Invalid choice.\n";
                 break;
+        }
+
+        if(isRunning){
+            pause();
         }
     }
 }
@@ -255,4 +268,3 @@ void Menu::loadModel() {
         delete newModel;
     }
 }
-
