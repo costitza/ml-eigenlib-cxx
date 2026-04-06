@@ -86,15 +86,14 @@ void LinearRModel :: deserialize(const json& j){
     bias = j.value("bias", 0.0);
     l2Penalty = j.value("l2Penalty", 0.0);
 
-    if (j.contains("weights")) {
+    if (j.contains("weights") && !j["weights"].is_null()) {
         std::vector<double> w_vec = j["weights"];
         weights = Eigen::Map<Eigen::VectorXd>(w_vec.data(), w_vec.size());
         this->setIsTrained(true);
     } else {
-        std::cout << "[Warning] No weights found in this JSON file!\n";
+        std::cout << "  -> [Notice] Loaded an untrained model.\n";
         this->setIsTrained(false);
     }
-    isTrained = false;
 }
 
 

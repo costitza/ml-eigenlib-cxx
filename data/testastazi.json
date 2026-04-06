@@ -1,0 +1,11 @@
+{
+    "hyperparameters": {
+        "epochs": 100,
+        "inputFeatures": 5,
+        "learningRate": 0.01
+    },
+    "isClassification": true,
+    "kNeighbors": 3,
+    "model_type": "KNNModel",
+    "name": "andrei"
+}
